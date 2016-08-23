@@ -1,0 +1,53 @@
+.box{
+	border: 1px solid #ddd;
+	box-shadow: 0 0 6px #ccc;
+    border-radius: 5px;
+    float:left;
+    padding: 20px;
+}
+
+li.user{
+	border: 1px solid #ddd;
+	box-shadow: 0 0 6px #ccc;
+	padding: 20px;
+	margin-top: 10px;
+}
+
+.left-container{
+	width:60%;
+	background: #fff;
+}
+
+.right-container{
+	width:40%;
+	background: #eae8e8;
+
+}
+
+
+.box-right, .box-left{
+	padding: 20px;
+}
+.btn-list-item{
+	width:90%;
+	height:50px;
+	margin-top: 10px;
+}
+.info>div{
+	float: left;
+	margin-left: 20;
+}
+.info{
+	width:100%;
+}
+
+table,td {
+    border: 1px solid #e2d0d0;
+    border-collapse: collapse;
+}
+td{
+	text-align: center;
+}
+.container{
+	width:100%;
+}

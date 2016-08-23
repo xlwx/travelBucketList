@@ -1,0 +1,93 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
+<script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+<style>
+
+.results{
+    margin: 0 auto;
+}
+
+.block {
+    float: left;
+	position: absolute;
+	background: #fff;
+	height:auto;
+	border: 1px solid #ddd;
+	box-shadow: 0 0 6px #ccc;
+    border-radius: 5px;
+	margin-bottom: 20px;
+	margin-left:20px;
+}
+
+.block img{
+    width:100%;
+    height:auto;
+}
+</style>
+
+</head>
+<body>
+<div class="results">
+  
+</div>  
+
+<script>
+
+//var left = Math.floor(($(window).width()*(1-4*23/100)-20*3)/2);
+var left = Math.floor(($(window).width()-$('.results').outerWidth())/2);
+$('.results').css({
+	'margin-left':left+'px'
+});
+
+$(window).load(jsonajax);
+
+$(window).scroll(function(){      
+     var $doc_height,$s_top,$now_height;  
+     $doc_height = $(document).height();        
+     $s_top = $(this).scrollTop();           
+     $now_height = $(this).height();           
+     if(($doc_height - $s_top - $now_height) < 100) jsonajax();      
+ });
+
+// init Masonry
+var $results = $('.results').masonry({
+  // options...
+  itemSelector: '.block',
+  columnWidth: 300,
+  percentPosition: true,
+  fitWidth: true
+});
+
+var $num = 0;  
+function jsonajax(){  
+     $.ajax({  
+         url:'includes/ajax/getIdeas.php',  
+         type:'POST',  
+         data:"num="+$num++,  
+         dataType:'json',  
+         success:function(ideas){  
+             if(typeof ideas == 'object'){           
+             	for(var i=0,l=ideas.length;i<l;i++){
+                	var $block = $('<div>').addClass('block');
+                	$('<img>').attr('src',ideas[i].picture).appendTo($block);
+                	$('.results').append($block);
+					
+					//$( '.results' ).prepend( $block);
+                }
+				$( '.results' ).masonry( 'reloadItems' );
+				//$( '.results' ).masonry( 'layout' );
+             	$results.imagesLoaded().progress( function() {
+  					$results.masonry('layout');
+				});
+            }
+			
+        }
+     });
+ }  
+</script>
+
+
+</body>
+</html>
